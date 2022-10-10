@@ -3,30 +3,53 @@
 #include <MidiKey.h>
 #include <MIDINotes.h>
 
-#define NUM_KEYS 13
-
-
+#define NUM_KEYS 37
 
 const midikey keys[NUM_KEYS] = {
-  {2, F6},
-  {3, Fs6},
-  {4, G6},
-  {5, Gs6},
-  {6, A6},
-  {7, As6},
-  {8, B6},
-  {9, C7},
-  {10, Cs7},
-  {11, D7},
-  {12, Ds7},
-  {13, E7},
-  {14, F7}
+  {2, F5},
+  {3, Fs5},
+  {4, G5},
+  {5, Gs5},
+  {6, A5},
+  {7, As5},
+  {8, B5},
+  {9, C6},
+  {10, Cs6},
+  {11, D6},
+  {12, Ds6},
+  {13, E6},
+  {14, F6},
+  {15, Fs6},
+  {16, G6},
+  {17, Gs6},
+  {18, A6},
+  {19, As6},
+  {20, B6},
+  {21, C7},
+  {22, Cs7},
+  {23, D7},
+  {24, Ds7},
+  {25, E7},
+  {26, F7},
+  {27, Fs7},
+  {28, G7},
+  {29, Gs7},
+  {30, A7},
+  {31, As7},
+  {32, B7},
+  {33, C8},
+  {34, Cs8},
+  {35, D8},
+  {36, Ds8},
+  {37, E8},
+  {38, F8}
 };
 
 uint32_t pressedKeys = 0x00000000;
 uint32_t previousKeys = 0x00000000;
 
-const int velocity = 0;
+int velocity = 0;
+int channel = 1;
 
 MIDI_CREATE_DEFAULT_INSTANCE();
 
@@ -54,11 +77,11 @@ void playNotes()
     {
       if (bitRead(pressedKeys, i))
       {
-        MIDI.sendNoteOn(keys[i].note, velocity, 1);
+        MIDI.sendNoteOn(keys[i].note, velocity, channel);
       }
       else
       {
-        MIDI.sendNoteOff(keys[i].note, velocity, 1);
+        MIDI.sendNoteOff(keys[i].note, velocity, channel);
       }
     }
   }
@@ -77,6 +100,5 @@ void setup() {
 void loop() {
   MIDI.read();
   readButtons();
-
   playNotes();
 }
