@@ -3,8 +3,8 @@
 #include <MidiKey.h>
 #include <MIDINotes.h>
 
+#ifdef UPPER_KEYS
 #define NUM_KEYS 37
-
 const midikey keys[NUM_KEYS] = {
   {2, F5},
   {3, Fs5},
@@ -44,6 +44,67 @@ const midikey keys[NUM_KEYS] = {
   {37, E8},
   {38, F8}
 };
+#endif
+#ifdef LOWER_KEYS
+#define NUM_KEYS 37
+const midikey keys[NUM_KEYS] = {
+  {2, F2},
+  {3, Fs2},
+  {4, G2},
+  {5, Gs2},
+  {6, A2},
+  {7, As2},
+  {8, B2},
+  {9, C3},
+  {10, Cs3},
+  {11, D3},
+  {12, Ds3},
+  {13, E3},
+  {14, F3},
+  {15, Fs3},
+  {16, G3},
+  {17, Gs3},
+  {18, A3},
+  {19, As3},
+  {20, B3},
+  {21, C4},
+  {22, Cs4},
+  {23, D4},
+  {24, Ds4},
+  {25, E4},
+  {26, F4},
+  {27, Fs4},
+  {28, G4},
+  {29, Gs4},
+  {30, A4},
+  {31, As4},
+  {32, B4},
+  {33, C5},
+  {34, Cs5},
+  {35, D5},
+  {36, Ds5},
+  {37, E5},
+  {38, F5}
+};
+#endif
+#ifdef BASS_KEYS // bass keys
+NUM_KEYS=13
+const midikey keys[NUM_KEYS] = {
+  {2, C1},
+  {3, Cs1},
+  {4, D1},
+  {5, Ds1},
+  {6, E1},
+  {7, F1},
+  {8, Fs1},
+  {9, G1},
+  {10, Gs1},
+  {11, A1},
+  {12, As1},
+  {13, B1},
+  {14, C2}
+}
+#endif
 
 uint32_t pressedKeys = 0x00000000;
 uint32_t previousKeys = 0x00000000;
@@ -53,7 +114,7 @@ int channel = 1;
 
 MIDI_CREATE_DEFAULT_INSTANCE();
 
-void readButtons()
+void readKeys()
 {
   for (uint8_t i = 0; i < NUM_KEYS; i++)
   {
@@ -77,15 +138,18 @@ void playNotes()
     {
       if (bitRead(pressedKeys, i))
       {
+        Serial.println("on - " + keys[i].note);
         MIDI.sendNoteOn(keys[i].note, velocity, channel);
       }
       else
       {
+        Serial.println("off - " + keys[i].note);
         MIDI.sendNoteOff(keys[i].note, velocity, channel);
       }
     }
   }
   previousKeys = pressedKeys;
+  pressedKeys = 0x00000000;
 }
 
 void setup() {
@@ -99,6 +163,6 @@ void setup() {
 
 void loop() {
   MIDI.read();
-  readButtons();
+  readKeys();
   playNotes();
 }

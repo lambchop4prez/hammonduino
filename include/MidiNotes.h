@@ -1,28 +1,20 @@
-// #define C0 12 
-// #define Cs0 13
-// #define D0 14
-// #define Ds0 15
-// #define E0 16
-// #define F0 17
-// #define Fs0 18
-// #define G0 19
-// #define Gs0 20
-// #define A0 21
-// #define As0 22
-// #define B0 23
 
-// #define C1 24
-// #define Cs1 25
-// #define D1 26
-// #define Ds1 27
-// #define E1 28
-// #define F1 29
-// #define Fs1 30
-// #define G1 31
-// #define Gs1 32
-// #define A1 33
-// #define As1 34
-// #define B1 35
+#define A0 21
+#define As0 22
+#define B0 23
+
+#define C1 24
+#define Cs1 25
+#define D1 26
+#define Ds1 27
+#define E1 28
+#define F1 29
+#define Fs1 30
+#define G1 31
+#define Gs1 32
+#define A1 33
+#define As1 34
+#define B1 35
 
 #define C2 36
 #define Cs2 37
